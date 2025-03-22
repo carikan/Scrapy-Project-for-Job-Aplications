@@ -4,6 +4,9 @@ import os
 import sys
 import csv
 
+
+print("Starting query.py...")
+
 # Add the project root path to be able to import from infra/
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 

@@ -1,4 +1,4 @@
 scrapy
 pymongo
-redis
-scrapy-redis
+# redis
+# scrapy-redis
