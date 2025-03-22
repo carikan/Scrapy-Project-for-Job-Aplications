@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  scrapy:
+    build: .  # Build from Dockerfile
+    container_name: scrapy_container
+    working_dir: /app
+    volumes:
+      - .:/app  # Mount the entire project
+      - scrapy_project:/app/jobs_project  # Store Scrapy project data separately
+    command: tail -f /dev/null  # Keeps container running
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+    networks:
+      - scrapy_network
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb_container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - scrapy_network
+
+  redis:
+    image: redis:7.2
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    networks:
+      - scrapy_network
+
+volumes:
+  mongodb_data:
+  scrapy_project:  # This stores the Scrapy project persistently
+
+networks:
+  scrapy_network:
